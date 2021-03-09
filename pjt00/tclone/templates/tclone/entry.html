@@ -1,7 +1,9 @@
 {% extends "tclone/base.html" %}
 {% block title %}Entry -{{ block.super }}{% endblock %}
 {% block content %}
-  ご利用には会員登録が必要です。
-  
+  <h1>ユーザー登録</h1>
+  <form class="createuser" method="post">
+    <a href="confirm">確認画面へ</a>
+  </form>
 
 {% endblock %}
