@@ -3,7 +3,6 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.http import HttpResponse
 from django.shortcuts import render
-from django.template import loader
 from django.urls import reverse_lazy
 from django.views.generic import FormView, TemplateView
 
@@ -14,7 +13,6 @@ class EntryUser(FormView):
     success_url = reverse_lazy('tclone:entryok')
     def form_valid(self, form):
         status = self.request.POST['proceed']
-        print(status)
         if status == 'go':
             return render(self.request, 'tclone/entryconf.html', {'form': form})
         elif status == 'judge':
