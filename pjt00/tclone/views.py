@@ -1,3 +1,4 @@
+from django.contrib.auth import authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.http import HttpResponse
@@ -7,23 +8,28 @@ from django.urls import reverse_lazy
 from django.views.generic import FormView, TemplateView
 
 # Create your views here.
-class CreateUser(FormView):
+class EntryUser(FormView):
     form_class = UserCreationForm
     template_name = 'tclone/entry.html'
-    success_url = reverse_lazy('tclone:ok')
+    success_url = reverse_lazy('tclone:entryok')
     def form_valid(self, form):
-        status = self.request.post['judge']
-        if status == 'judge':
-            return render(request, 'tclone/ok.html')
+        status = self.request.POST['proceed']
+        print(status)
+        if status == 'go':
+            return render(self.request, 'tclone/entryconf.html', {'form': form})
+        elif status == 'judge':
+            form.save()
+            user = authenticate(
+                username=form.cleaned_data['username'],
+                password=form.cleaned_data['password1']
+            )
+            return super().form_valid(form)
+        else:
+            return(reverse_lazy('tclone:top'))
+
 
 def top(request):
     return render(request, 'tclone/top.html')
 
-def entry(request):
-    return render(request, 'tclone/entry.html')
-
-def entryconfirm(request):
-    return render(request, 'tclone/entryconf.html')
-
 def ok(request):
-    return render(request, 'tclone/ok.html')
+    return render(request, 'tclone/entryok.html')

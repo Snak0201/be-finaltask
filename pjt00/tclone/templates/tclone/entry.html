@@ -2,8 +2,9 @@
 {% block title %}Entry -{{ block.super }}{% endblock %}
 {% block content %}
   <h1>ユーザー登録</h1>
-  <form class="createuser" method="post">
-    <a href="confirm">確認画面へ</a>
+  <form class="entryform" method="POST">
+    {% csrf_token %}
+      {{ form.as_p }}
+    <button name="proceed" value="go">確認画面へ</button>
   </form>
-
 {% endblock %}
