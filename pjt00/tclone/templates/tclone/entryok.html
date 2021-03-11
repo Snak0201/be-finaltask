@@ -1,0 +1,6 @@
+{% extends "tclone/base.html" %}
+{% block title %}OK -{{ block.super }}{% endblock %}
+{% block content %}
+ユーザー登録に成功しました。<br>
+<a href="{% url 'tclone:top' %}">トップページ</a>へ戻り、ログインしてください。
+{% endblock %}

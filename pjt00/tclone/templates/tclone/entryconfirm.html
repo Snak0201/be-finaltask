@@ -1,0 +1,17 @@
+{% extends "tclone/base.html" %}
+{% block title %}Entry -{{ block.super }}{% endblock %}
+{% block content %}
+  以下の内容で登録します。
+  <table  class="ui celled table table table-hover" >
+    <tr><td>お名前</td><td>{{form.cleaned_data.username}}</td></tr>
+    <tr><td>パスワード</td><td>セキュリティのため表示されません</td></tr>
+  </table>
+  <form class="entryform" method="POST">
+    {% csrf_token %}
+    {% for field in form %}
+    {{field.as_hidden}}
+    {% endfor %}
+    <a href="{% url 'tclone:entry' %}">修正</a>
+    <button name='proceed' value='judge'>登録</button>
+  </form>
+{% endblock %}
