@@ -14,7 +14,7 @@ class EntryUser(FormView):
     def form_valid(self, form):
         status = self.request.POST['proceed']
         if status == 'go':
-            return render(self.request, 'tclone/entryconf.html', {'form': form})
+            return render(self.request, 'tclone/entryconfirm.html', {'form': form})
         elif status == 'judge':
             form.save()
             user = authenticate(
