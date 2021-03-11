@@ -2,7 +2,7 @@
 {% block content %}
   <p>Twiiter Clone Applicationのご利用には会員登録が必要です。</p>
   <div class="entryuser">
-    <a href="entry">会員登録</a>
+    <a href="{% url 'tclone:entry' %}">会員登録</a>
     <p>ログイン</p>
   </div>
 {% endblock %}

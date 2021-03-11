@@ -2,5 +2,5 @@
 {% block title %}OK -{{ block.super }}{% endblock %}
 {% block content %}
 ユーザー登録に成功しました。<br>
-<a href="..">トップページ</a>へ戻り、ログインしてください。
+<a href="{% url 'tclone:top' %}">トップページ</a>へ戻り、ログインしてください。
 {% endblock %}

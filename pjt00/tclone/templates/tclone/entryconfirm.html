@@ -11,7 +11,7 @@
     {% for field in form %}
     {{field.as_hidden}}
     {% endfor %}
-    <a href="../entry">修正</a>
+    <a href="{% url 'tclone:entry' %}">修正</a>
     <button name='proceed' value='judge'>登録</button>
   </form>
 {% endblock %}
