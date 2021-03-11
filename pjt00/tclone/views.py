@@ -7,7 +7,7 @@ from django.urls import reverse_lazy
 from django.views.generic import FormView, TemplateView
 
 # Create your views here.
-class EntryUser(FormView):
+class EntryUserView(FormView):
     form_class = UserCreationForm
     template_name = 'tclone/entry.html'
     success_url = reverse_lazy('tclone:entryok')
