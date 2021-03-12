@@ -1,5 +1,6 @@
 from django.contrib.auth import authenticate
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.http import HttpResponse
 from django.shortcuts import render
@@ -25,6 +26,9 @@ class EntryUserView(FormView):
         else:
             return(reverse_lazy('tclone:top'))
 
+class HomeView(LoginRequiredMixin, TemplateView):
+    template_name = 'tclone/home.html'
+
 
 def top(request):
     return render(request, 'tclone/top.html')
@@ -35,5 +39,5 @@ def ok(request):
 def login(request):
     return render(request, 'tclone/login.html')
 
-def home(request):
-    return render(request, 'tclone/home.html')
+# def home(request):
+#     return render(request, 'tclone/home.html')
