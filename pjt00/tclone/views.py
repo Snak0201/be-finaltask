@@ -31,3 +31,9 @@ def top(request):
 
 def ok(request):
     return render(request, 'tclone/entryok.html')
+
+def login(request):
+    return render(request, 'tclone/login.html')
+
+def home(request):
+    return render(request, 'tclone/home.html')

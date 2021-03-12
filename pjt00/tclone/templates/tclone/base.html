@@ -15,16 +15,18 @@
     </header>
     <section>
       <div class="welcome">
-        {% block welcome %}
-          <h1>Twitter Clone Application へようこそ！</h1>
-        {% endblock %}
+        <h1>
+          {% block welcome %}
+            Twitter Clone Web Application へようこそ！
+          {% endblock %}
+        </h1>
       </div>
       <div class='body'>
         {% block content %}{% endblock %}
       </div>
     </section>
     <footer>
-       
+
     </footer>
   </body>
 </html>
