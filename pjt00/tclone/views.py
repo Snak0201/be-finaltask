@@ -2,7 +2,6 @@ from django.contrib.auth import authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
-from django.http import HttpResponse
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import FormView, TemplateView
@@ -35,9 +34,3 @@ def top(request):
 
 def ok(request):
     return render(request, 'tclone/entryok.html')
-
-def login(request):
-    return render(request, 'tclone/login.html')
-
-# def home(request):
-#     return render(request, 'tclone/home.html')
