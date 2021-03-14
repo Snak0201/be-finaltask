@@ -1,7 +1,7 @@
 from django.contrib.auth import authenticate
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
-from django.http import HttpResponse
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import FormView, TemplateView
@@ -24,6 +24,9 @@ class EntryUserView(FormView):
             return super().form_valid(form)
         else:
             return(reverse_lazy('tclone:top'))
+
+class HomeView(LoginRequiredMixin, TemplateView):
+    template_name = 'tclone/home.html'
 
 
 def top(request):
