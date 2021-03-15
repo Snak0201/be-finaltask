@@ -20,6 +20,11 @@
             Twitter Clone Web Application へようこそ！
           {% endblock %}
         </h1>
+        <p>
+          {% block log %}
+            <b><a href="{% url 'tclone:login' %}">ログイン</a></b>
+          {% endblock %}
+        </p>
       </div>
       <div class='body'>
         {% block content %}{% endblock %}

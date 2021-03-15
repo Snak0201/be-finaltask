@@ -28,7 +28,6 @@ class EntryUserView(FormView):
 class HomeView(LoginRequiredMixin, TemplateView):
     template_name = 'tclone/home.html'
 
-
 def top(request):
     return render(request, 'tclone/top.html')
 
