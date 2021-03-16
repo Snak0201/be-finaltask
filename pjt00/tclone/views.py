@@ -28,8 +28,8 @@ class EntryUserView(FormView):
 class HomeView(LoginRequiredMixin, TemplateView):
     template_name = 'tclone/home.html'
 
-def top(request):
-    return render(request, 'tclone/top.html')
+class TopView(TemplateView):
+    template_name = 'tclone/top.html'
 
-def ok(request):
-    return render(request, 'tclone/entryok.html')
+class EntryOKView(TemplateView):
+    template_name = 'tclone/entryok.html'
