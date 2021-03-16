@@ -22,7 +22,11 @@
         </h1>
         <p>
           {% block log %}
+          {% if user.is_authenticated is True %}
+            <a href="{% url 'tclone:logout' %}"><b>ログアウト</b></a>
+          {% else %}
             <b><a href="{% url 'tclone:login' %}">ログイン</a></b>
+          {% endif %}
           {% endblock %}
         </p>
       </div>

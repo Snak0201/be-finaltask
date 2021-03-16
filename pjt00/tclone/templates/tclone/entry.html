@@ -1,10 +1,11 @@
 {% extends "tclone/base.html" %}
 {% block title %}Entry -{{ block.super }}{% endblock %}
+{% block log %}{% endblock %}
 {% block content %}
   <h1>ユーザー登録</h1>
   <form class="entryform" method="POST">
     {% csrf_token %}
-      {{ form.as_p }}
+    {{ form.as_p }}
     <button name="proceed" value="go">確認画面へ</button>
   </form>
 {% endblock %}
