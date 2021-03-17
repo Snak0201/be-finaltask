@@ -20,10 +20,6 @@ class EntryUserView(FormView):
             return render(self.request, 'tclone/entryconfirm.html', {'form': form})
         elif status == 'judge':
             form.save()
-            user = authenticate(
-                username=form.cleaned_data['username'],
-                password=form.cleaned_data['password1']
-            )
             return super().form_valid(form)
         else:
             return(reverse_lazy('tclone:top'))
