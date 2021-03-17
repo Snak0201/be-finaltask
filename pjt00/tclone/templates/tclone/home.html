@@ -4,5 +4,8 @@
   {{ user }} でログインしています
 {% endblock %}
 {% block content %}
-  <p>hogehuga</p>
+  {% block tweet %}
+  <a href="{% url 'tclone:tweet' %}">{{ user }} でツイートする</a>
+  {% endblock %}
+  <p>Display Tweet</p>
 {% endblock %}

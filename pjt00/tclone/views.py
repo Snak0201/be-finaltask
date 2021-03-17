@@ -29,3 +29,6 @@ class EntryOKView(TemplateView):
 
 class HomeView(LoginRequiredMixin, TemplateView):
     template_name = 'tclone/home.html'
+
+class TweetView(LoginRequiredMixin, TemplateView):
+    template_name = 'tclone/tweet.html'
