@@ -1,7 +1,7 @@
 {% extends "tclone/base.html" %}
 {% block title %}Login -{{ block.super }}{% endblock %}
-{% block content %}
 {% block log %}{% endblock %}
+{% block content %}
 登録したユーザー名とパスワードでログインしてください。
 <form class="loginform" method="post">
   {% csrf_token %}
