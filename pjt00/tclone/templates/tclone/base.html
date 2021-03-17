@@ -8,6 +8,10 @@
         Twitter Clone Web Application
       {% endblock %}
     </title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style0.css' %}">
+    <style type="text/css">
+
+    </style>
   </head>
   <body>
     <header>
@@ -20,6 +24,15 @@
             Twitter Clone Web Application へようこそ！
           {% endblock %}
         </h1>
+        <p>
+          {% block log %}
+          {% if user.is_authenticated %}
+            <a href="{% url 'tclone:logout' %}"><em>ログアウト</em></a>
+          {% else %}
+            <a href="{% url 'tclone:login' %}"><em>ログイン</em></a>
+          {% endif %}
+          {% endblock %}
+        </p>
       </div>
       <div class='body'>
         {% block content %}{% endblock %}

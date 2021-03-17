@@ -129,3 +129,5 @@ MEDIA_URL = '/media/'
 LOGIN_URL = 'tclone:login'
 
 LOGIN_REDIRECT_URL = 'tclone:home'
+
+LOGOUT_REDIRECT_URL = 'tclone:top'
