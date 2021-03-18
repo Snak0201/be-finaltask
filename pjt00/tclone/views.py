@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import FormView, TemplateView
+from .models import Tweet
 
 
 class TopView(TemplateView):
@@ -32,3 +33,7 @@ class HomeView(LoginRequiredMixin, TemplateView):
 
 class TweetView(LoginRequiredMixin, TemplateView):
     template_name = 'tclone/tweet.html'
+
+def timeline(request):
+    tweets = Tweet.objects.all()
+    return render(request, 'tclone/home.html', {'tweets':tweets})

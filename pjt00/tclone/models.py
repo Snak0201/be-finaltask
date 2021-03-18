@@ -8,5 +8,7 @@ class Tweet(models.Model):
         on_delete=models.CASCADE,
     )
     tweet = models.CharField(max_length=140)
+    def publish(self):
+        self.save()
     def __str__(self):
         return self.tweet
