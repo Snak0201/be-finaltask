@@ -9,6 +9,9 @@
   {% endblock %}
   {% block timeline %}
   <h1>タイムライン</h1>
-  {{ tweets }}
+  {% for text in tweets reversed %}
+    <em><a href="#">{{ text.user }}</a></em>
+    <p>{{ text.tweet }}</p>
+  {% endfor %}
   {% endblock %}
 {% endblock %}

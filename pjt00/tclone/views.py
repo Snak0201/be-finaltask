@@ -30,10 +30,10 @@ class EntryOKView(TemplateView):
 
 class HomeView(LoginRequiredMixin, TemplateView):
     template_name = 'tclone/home.html'
+    def get_context_data(self, **kwargs):
+        text = super().get_context_data(**kwargs)
+        text['tweets'] = Tweet.objects.all()
+        return text
 
 class TweetView(LoginRequiredMixin, TemplateView):
     template_name = 'tclone/tweet.html'
-
-def timeline(request):
-    tweets = Tweet.objects.all()
-    return render(request, 'tclone/home.html', {'tweets':tweets})
