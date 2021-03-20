@@ -7,7 +7,7 @@ class Tweet(models.Model):
         get_user_model(),
         on_delete=models.CASCADE,
     )
-    tweet = models.CharField(max_length=140)
+    tweet = models.TextField(max_length=140)
     def publish(self):
         self.save()
     def __str__(self):

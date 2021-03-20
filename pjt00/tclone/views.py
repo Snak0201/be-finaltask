@@ -2,9 +2,10 @@ from django.contrib.auth import authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import FormView, TemplateView
+from .forms import TweetForm
 from .models import Tweet
 
 
@@ -35,5 +36,13 @@ class HomeView(LoginRequiredMixin, TemplateView):
         text['tweets'] = Tweet.objects.all()
         return text
 
-class TweetView(LoginRequiredMixin, TemplateView):
-    template_name = 'tclone/tweet.html'
+def tweet(request):
+    form = TweetForm(request.POST)
+    if form.is_valid():
+        tweet = form.save(commit=False)
+        tweet.user = request.user
+        tweet.save()
+        return redirect('tclone:home')
+    else:
+        form = TweetForm()
+    return render(request, 'tclone/tweet.html', {'form': form})
