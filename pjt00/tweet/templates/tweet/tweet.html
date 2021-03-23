@@ -1,8 +1,5 @@
-{% extends "tclone/base.html" %}
+{% extends "tweet/base.html" %}
 {% block title %}Tweet -{{ block.super }}{% endblock %}
-{% block welcome %}
-  {{ user }} でログインしています
-{% endblock %}
 {% block content %}
   <form class="tweetform" method="POST">
     {% csrf_token %}

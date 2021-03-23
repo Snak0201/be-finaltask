@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'tclone.apps.TcloneConfig',
+    'tweet.apps.TweetConfig'
 ]
 
 MIDDLEWARE = [

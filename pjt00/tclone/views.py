@@ -6,8 +6,7 @@ from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import FormView, TemplateView
-from .forms import TweetForm
-from .models import Tweet
+from tweet.models import Tweet
 
 
 class TopView(TemplateView):
@@ -36,17 +35,3 @@ class HomeView(LoginRequiredMixin, TemplateView):
         context = super().get_context_data(**kwargs)
         context['tweets'] = Tweet.objects.all()
         return context
-
-@login_required
-def tweet(request):
-    form = TweetForm(request.POST)
-    if request.method == 'POST':
-        check = TweetForm(request.POST)
-        if form.is_valid():
-            tweet = form.save(commit=False)
-            tweet.user = request.user
-            tweet.save()
-            return redirect('tclone:home')
-    else:
-        form = TweetForm()
-    return render(request, 'tclone/tweet.html', {'form': form})
