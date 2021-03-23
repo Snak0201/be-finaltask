@@ -1,4 +1,5 @@
 from django.contrib.auth import authenticate
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
@@ -36,11 +37,16 @@ class HomeView(LoginRequiredMixin, TemplateView):
         context['tweets'] = Tweet.objects.all()
         return context
 
+@login_required
 def tweet(request):
     form = TweetForm(request.POST)
-    if form.is_valid():
-        tweet = form.save(commit=False)
-        tweet.user = request.user
-        tweet.save()
-        return redirect('tclone:home')
+    if request.method == 'POST':
+        check = TweetForm(request.POST)
+        if form.is_valid():
+            tweet = form.save(commit=False)
+            tweet.user = request.user
+            tweet.save()
+            return redirect('tclone:home')
+    else:
+        form = TweetForm()
     return render(request, 'tclone/tweet.html', {'form': form})
