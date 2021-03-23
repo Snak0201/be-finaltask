@@ -3,10 +3,10 @@
 {% block welcome %}
   {{ user }} でログインしています
 {% endblock %}
-{% block tweet %}
-<form class="tweetform" method="POST">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit" class="tweet">ツイート</button>
-</form>
+{% block content %}
+  <form class="tweetform" method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="tweet">ツイート</button>
+  </form>
 {% endblock %}

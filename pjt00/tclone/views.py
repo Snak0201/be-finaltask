@@ -32,9 +32,9 @@ class EntryOKView(TemplateView):
 class HomeView(LoginRequiredMixin, TemplateView):
     template_name = 'tclone/home.html'
     def get_context_data(self, **kwargs):
-        text = super().get_context_data(**kwargs)
-        text['tweets'] = Tweet.objects.all()
-        return text
+        context = super().get_context_data(**kwargs)
+        context['tweets'] = Tweet.objects.all()
+        return context
 
 def tweet(request):
     form = TweetForm(request.POST)
@@ -43,6 +43,4 @@ def tweet(request):
         tweet.user = request.user
         tweet.save()
         return redirect('tclone:home')
-    else:
-        form = TweetForm()
     return render(request, 'tclone/tweet.html', {'form': form})
