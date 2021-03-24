@@ -1,10 +1,10 @@
-{% extends "tclone/base.html" %}
+{% extends "tweet/base.html" %}
 {% block title %}Home -{{ block.super }}{% endblock %}
 {% block content %}
   <a href="{% url 'tweet:tweet' %}">{{ user }} でツイートする</a>
   <h1>タイムライン</h1>
   {% for tweet in tweets reversed %}
-    <em><a href="#">{{ tweet.user }}</a></em>
+    <em><a href="#">{{ tweet.user }}</a></em> / <a href="#">詳細</a>
     <p>{{ tweet.tweet }}</p>
   {% endfor %}
 {% endblock %}

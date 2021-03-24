@@ -129,6 +129,6 @@ MEDIA_URL = '/media/'
 
 LOGIN_URL = 'tclone:login'
 
-LOGIN_REDIRECT_URL = 'tclone:home'
+LOGIN_REDIRECT_URL = 'tweet:home'
 
 LOGOUT_REDIRECT_URL = 'tclone:top'

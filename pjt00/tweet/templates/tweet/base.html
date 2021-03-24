@@ -9,16 +9,13 @@
       {% endblock %}
     </title>
     <link rel="stylesheet" type="text/css" href="{% static 'css/style0.css' %}">
-    <style type="text/css">
-
-    </style>
   </head>
   <body>
     <header>
       <h1>Twitter Clone Web Application</h1>
     </header>
     <section>
-      <div class="welcome">
+      <div class="subhead">
         <h1>
           {% block subhead %}
             {{ user }} でログインしています
@@ -26,13 +23,13 @@
         </h1>
         <p>
           {% block log %}
-            {% if user.is_authenticated %}
-              <a href="{% url 'tclone:home' %}">ホーム</a>
-              /
-              <a href="{% url 'tclone:logout' %}"><em>ログアウト</em></a>
-            {% else %}
-              <a href="{% url 'tclone:login' %}"><em>ログイン</em></a>
-            {% endif %}
+          {% if user.is_authenticated %}
+            <a href="{% url 'tweet:home' %}">{{ user }} のホーム</a>
+            /
+            <a href="{% url 'tclone:logout' %}"><em>ログアウト</em></a>
+          {% else %}
+            <a href="{% url 'tclone:login' %}"><em>ログイン</em></a>
+          {% endif %}
           {% endblock %}
         </p>
       </div>

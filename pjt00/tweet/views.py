@@ -8,7 +8,12 @@ from .forms import TweetForm
 from .models import Tweet
 
 
-
+class HomeView(LoginRequiredMixin, TemplateView):
+    template_name = 'tweet/home.html'
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['tweets'] = Tweet.objects.all()
+        return context
 
 @login_required
 def tweet(request):
@@ -19,7 +24,7 @@ def tweet(request):
             tweet = form.save(commit=False)
             tweet.user = request.user
             tweet.save()
-            return redirect('tclone:home')
+            return redirect('tweet:home')
     else:
         form = TweetForm()
     return render(request, 'tweet/tweet.html', {'form': form})
