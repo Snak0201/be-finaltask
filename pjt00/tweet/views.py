@@ -2,7 +2,7 @@ from django.contrib.auth import authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
-from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404, render, redirect
 from django.views.generic import FormView, TemplateView
 from .forms import TweetForm
 from .models import Tweet
@@ -28,3 +28,8 @@ def tweet(request):
     else:
         form = TweetForm()
     return render(request, 'tweet/tweet.html', {'form': form})
+
+@login_required
+def detail(request, pk):
+    tweet = get_object_or_404(Tweet, pk=pk)
+    return render(request, 'tweet/detail.html', {'tweet': tweet})
