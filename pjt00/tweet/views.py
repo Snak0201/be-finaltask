@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404, render, redirect
 from django.views.decorators.http import require_POST
 from django.views.generic import FormView, TemplateView
+from rules.contrib.views import permission_required, objectgetter
 from .forms import TweetForm
 from .models import Tweet
 
@@ -35,7 +36,7 @@ def tdetail(request, pk):
     tweet = get_object_or_404(Tweet, pk=pk)
     return render(request, 'tweet/tdetail.html', {'tweet': tweet})
 
-@login_required
+@permission_required('tweet.can_tedit',fn=objectgetter(Tweet, 'pk'))
 def tedit(request, pk):
     tweet = get_object_or_404(Tweet, pk=pk)
     if request.method == 'POST':

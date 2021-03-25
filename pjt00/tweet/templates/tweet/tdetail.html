@@ -3,7 +3,6 @@
   <p><a href="#">{{ tweet.user }}</a></p>
   <p>{{ tweet.tweet }}</p>
   {% if request.user.id == tweet.user.id %}
-
     <form class="delete_confirm" action="{% url 'tweet:tdelete' tweet.pk %}" method="post">
       {% csrf_token %}
       <a href="{% url 'tweet:tedit' pk=tweet.pk %}">編集</a> /
