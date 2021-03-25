@@ -4,7 +4,7 @@
   <a href="{% url 'tweet:tweet' %}">{{ user }} でツイートする</a>
   <h1>タイムライン</h1>
   {% for tweet in tweets reversed %}
-    <em><a href="#">{{ tweet.user }}</a></em> / <a href="{% url 'tweet:detail' pk=tweet.pk %}">詳細</a>
+    <em><a href="#">{{ tweet.user }}</a></em> / <a href="{% url 'tweet:tdetail' pk=tweet.pk %}">詳細</a>
     <p>{{ tweet.tweet }}</p>
   {% endfor %}
 {% endblock %}

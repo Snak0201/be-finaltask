@@ -1,8 +1,0 @@
-{% extends "tweet/base.html" %}
-{% block content %}
-  <p><a href="#">{{ tweet.user }}</a></p>
-  <p>{{ tweet.tweet }}</p>
-  {% if request.user.id == tweet.user.id %}
-    <a href="#">編集</a> / <a href="#">削除</a>
-  {% endif %}
-{% endblock %}
