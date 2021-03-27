@@ -1,7 +1,4 @@
-from django.contrib.auth import authenticate
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.models import User
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import FormView, TemplateView
@@ -26,6 +23,3 @@ class EntryUserView(FormView):
 
 class EntryOKView(TemplateView):
     template_name = 'tclone/entryok.html'
-
-class HomeView(LoginRequiredMixin, TemplateView):
-    template_name = 'tclone/home.html'

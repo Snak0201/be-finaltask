@@ -19,5 +19,6 @@ from django.urls import include, path
 
 urlpatterns = [
     path("tclone/", include("tclone.urls")),
+    path("tclone/home/", include("tweet.urls")),
     path("admin/", admin.site.urls),
 ]

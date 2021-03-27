@@ -38,8 +38,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rules.apps.AutodiscoverRulesConfig',
     'tclone.apps.TcloneConfig',
+    'tweet.apps.TweetConfig',
 ]
+
+AUTHENTICATION_BACKENDS = (
+    'rules.permissions.ObjectPermissionBackend',
+    'django.contrib.auth.backends.ModelBackend',
+)
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -128,6 +135,6 @@ MEDIA_URL = '/media/'
 
 LOGIN_URL = 'tclone:login'
 
-LOGIN_REDIRECT_URL = 'tclone:home'
+LOGIN_REDIRECT_URL = 'tweet:home'
 
 LOGOUT_REDIRECT_URL = 'tclone:top'

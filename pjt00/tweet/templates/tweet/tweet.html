@@ -1,0 +1,10 @@
+{% extends "tweet/base.html" %}
+{% block title %}Tweet -{{ block.super }}{% endblock %}
+
+{% block content %}
+  <form class="tweetform" method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="tweet">ツイート</button>
+  </form>
+{% endblock %}
