@@ -17,9 +17,8 @@ class HomeView(LoginRequiredMixin, TemplateView):
 
 @login_required
 def tweet(request):
-    form = TweetForm(request.POST)
     if request.method == 'POST':
-        check = TweetForm(request.POST)
+        form = TweetForm(request.POST)
         if form.is_valid():
             tweet = form.save(commit=False)
             tweet.user = request.user
@@ -41,12 +40,13 @@ def tedit(request, pk):
         form = TweetForm(request.POST, instance=tweet)
         if form.is_valid():
             tweet.save()
-            return redirect('tweet:home', pk=tweet.pk)
+            return redirect('tweet:home')
     else:
         form = TweetForm(instance=tweet)
     return render(request, 'tweet/tweet.html', {'form': form})
 
 @require_POST
+@permission_required('tweet.can_tedit',fn=objectgetter(Tweet, 'pk'))
 def tdelete(request, pk):
     tweet = get_object_or_404(Tweet, pk=pk)
     tweet.delete()
