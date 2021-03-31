@@ -1,6 +1,7 @@
 {% extends "tweet/base.html" %}
+{% block title %}Tweet by {{ tweet.user }}-{{ block.super }}{% endblock %}
 {% block content %}
-  <p><a href="#">{{ tweet.user }}</a></p>
+  <p><a href="{% url 'tweet:profile' pk=tweet.user.pk %}">{{ tweet.user }}</a></p>
   <p>{{ tweet.tweet }}</p>
   {% if request.user.id == tweet.user.id %}
     <form class="delete_confirm" action="{% url 'tweet:tdelete' tweet.pk %}" method="post">

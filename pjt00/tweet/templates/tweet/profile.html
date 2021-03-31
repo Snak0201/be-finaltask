@@ -1,0 +1,6 @@
+{% extends "tweet/base.html" %}
+{% block title %}{{ user }} -{{ block.super }}{% endblock %}
+{% block content %}
+<h1>{{ user }} さんのツイート</h1>
+<p><a href="#">{{ user }} さんをフォローする</a></p>
+{% endblock %}

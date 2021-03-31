@@ -1,8 +1,10 @@
+from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+# from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404, render, redirect
 from django.views.decorators.http import require_POST
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, DetailView
 from rules.contrib.views import permission_required, objectgetter
 from .forms import TweetForm
 from .models import Tweet
@@ -51,3 +53,19 @@ def tdelete(request, pk):
     tweet = get_object_or_404(Tweet, pk=pk)
     tweet.delete()
     return redirect('tweet:home')
+
+
+@login_required
+def profile(request, pk):
+    user = get_object_or_404(get_user_model(), pk=pk)
+    return render(request, 'tweet/profile.html', {'user': user})
+
+
+# class ProfileView(LoginRequiredMixin, DetailView):
+#     model = get_user_model()
+#     template_name = 'tweet/profile.html'
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         pk = get_user_model().objects.get(id=self.kwargs['pk'])
+#         context['pk'] = pk
+#         return context
