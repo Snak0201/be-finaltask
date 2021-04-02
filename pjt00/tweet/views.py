@@ -54,12 +54,22 @@ def tdelete(request, pk):
     tweet.delete()
     return redirect('tweet:home')
 
-
 @login_required
 def profile(request, pk):
     user = get_object_or_404(get_user_model(), pk=pk)
-    return render(request, 'tweet/profile.html', {'user': user})
+    tweets = Tweet.objects.filter(user=user)
+    return render(request, 'tweet/profile.html',
+    {'user': user, 'tweets': tweets}
+    )
 
+# class ProfileView(LoginRequiredMixin, TemplateView):
+#     template_name = 'tweet/profile.html'
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         context['user'] = get_user_model()
+#         context['tweets'] = Tweet.objects.all()
+#         context['pk'] = get_user_model().objects.get(pk=self.kwargs['pk'])
+#         return context
 
 # class ProfileView(LoginRequiredMixin, TemplateView):
 #     template_name = 'tweet/profile.html'
@@ -68,14 +78,5 @@ def profile(request, pk):
 #         pk = get_user_model().objects.get(pk=self.kwargs['pk'])
 #         context['user'] = get_object_or_404(get_user_model(), pk=pk)
 #         context['tweet'] = Tweet.objects.filter(location_id=self.kwargs['pk'])
-#         context['pk'] = pk
-#         return context
-
-# class ProfileView(LoginRequiredMixin, DetailView):
-#     model = get_user_model()
-#     template_name = 'tweet/profile.html'
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         pk = get_user_model().objects.get(id=self.kwargs['pk'])
 #         context['pk'] = pk
 #         return context
