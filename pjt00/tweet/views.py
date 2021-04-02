@@ -61,6 +61,16 @@ def profile(request, pk):
     return render(request, 'tweet/profile.html', {'user': user})
 
 
+# class ProfileView(LoginRequiredMixin, TemplateView):
+#     template_name = 'tweet/profile.html'
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         pk = get_user_model().objects.get(pk=self.kwargs['pk'])
+#         context['user'] = get_object_or_404(get_user_model(), pk=pk)
+#         context['tweet'] = Tweet.objects.filter(location_id=self.kwargs['pk'])
+#         context['pk'] = pk
+#         return context
+
 # class ProfileView(LoginRequiredMixin, DetailView):
 #     model = get_user_model()
 #     template_name = 'tweet/profile.html'
