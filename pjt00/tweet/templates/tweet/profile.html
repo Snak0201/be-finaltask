@@ -3,7 +3,7 @@
 {% block content %}
 <h1>{{ user }} さんのツイート</h1>
 {% if user.id is not request.user.id %}
-<p><a href="#">{{ user }} さんをフォローする</a></p>
+<p><a href="{% url 'tclone:follow' %}">{{ user }} さんをフォローする</a></p>
 {% endif %}
 {% for tweet in tweets reversed %}
   <em><a href="{% url 'tweet:profile' pk=tweet.user.pk %}">{{ tweet.user }}</a></em> / <a href="{% url 'tweet:tdetail' pk=tweet.pk %}">詳細</a>
