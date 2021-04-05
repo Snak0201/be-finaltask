@@ -8,6 +8,6 @@ urlpatterns = [
     path('', include('django.contrib.auth.urls')),
     path('entry/', views.EntryUserView.as_view(), name='entry'),
     path('entry/ok', views.EntryOKView.as_view(), name='entryok'),
-    path('follow/', views.FollowView.as_view(), name='follow'),
+    path('follow/<int:pk>', views.FollowView.as_view(), name='follow'),
     path('followx/', views.FollowXView.as_view(), name='followx')
     ]

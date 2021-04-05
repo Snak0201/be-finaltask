@@ -1,9 +1,11 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
 from django.urls import reverse_lazy
-from django.views.generic import FormView, TemplateView
-from .forms import FollowForm, FollowXForm
+from django.views.generic import CreateView, FormView, TemplateView
+from .forms import FollowXForm
+from .models import FF
 
 
 class TopView(TemplateView):
@@ -26,8 +28,9 @@ class EntryUserView(FormView):
 class EntryOKView(TemplateView):
     template_name = 'tclone/entryok.html'
 
-class FollowView(FormView):
-    form_class = FollowForm
+class FollowView(LoginRequiredMixin, CreateView):
+    model = FF
+    fields = ['followed']
     template_name = 'tclone/follow.html'
     success_url = reverse_lazy('tweet:home')
 
