@@ -1,7 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, FormView, TemplateView
 from .forms import FollowXForm
@@ -30,9 +30,25 @@ class EntryOKView(TemplateView):
 
 class FollowView(LoginRequiredMixin, CreateView):
     model = FF
-    fields = ['followed']
+    fields = []
     template_name = 'tclone/follow.html'
     success_url = reverse_lazy('tweet:home')
+    def form_valid(self, form):
+        model = form.save(commit=False)
+        model.user = get_user_model().objects.get(pk=self.request.user.id)
+        model.followed = get_object_or_404(
+            get_user_model(),
+            pk=self.kwargs['pk']
+            )
+        if model.user == model.followed:
+            form.add_error(None,'もうフォロー済みです')
+            return super().form_invalid(form)
+        elif FF.objects.filter(user=model.user, followed=model.followed).exists():
+            form.add_error(None,'もうフォロー済みです')
+            return super().form_invalid(form)
+        else:
+            model.save()
+        return super().form_valid(form)
 
 class FollowXView(FormView):
     form_class = FollowXForm
