@@ -7,6 +7,7 @@ from django.views.generic import TemplateView, DetailView
 from rules.contrib.views import permission_required, objectgetter
 from .forms import TweetForm
 from .models import Tweet
+from tclone.models import FF
 
 
 class HomeView(LoginRequiredMixin, TemplateView):
@@ -57,9 +58,11 @@ def tdelete(request, pk):
 def profile(request, pk):
     user = get_object_or_404(get_user_model(), pk=pk)
     tweets = Tweet.objects.filter(user=user)
+    ff = FF.objects.filter(user=request.user, followed=user)
     return render(request, 'tweet/profile.html',
         {
         'user': user,
-        'tweets': tweets
+        'tweets': tweets,
+        'ff': ff
         }
     )
