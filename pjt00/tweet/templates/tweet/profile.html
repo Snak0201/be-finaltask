@@ -6,7 +6,11 @@
   {% if not ff %}
     <p><a href="{% url 'tclone:follow' pk=user.pk %}">{{ user }} さんをフォローする</a></p>
   {% else %}
-    <p><a href="{% url 'tclone:followx' pk=user.pk %}">{{ user }}さんをフォロー解除</a></p>
+  <form class="delete_confirm" action="{% url 'tclone:followx' pk=user.pk %}" method="post">
+    フォローしています！
+    {% csrf_token %}
+    <button type="submit" onclick='return confirm("削除しますか？");'>フォロー解除</button>
+  </form>
   {% endif %}
 {% else %}
     <p>
