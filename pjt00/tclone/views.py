@@ -1,4 +1,3 @@
-from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
@@ -6,7 +5,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse_lazy
 from django.views.decorators.http import require_POST
-from django.views.generic import CreateView, DeleteView ,FormView, TemplateView
+from django.views.generic import CreateView, DeleteView, FormView, TemplateView
 from .forms import FollowXForm
 from .models import FF
 
@@ -21,7 +20,11 @@ class EntryUserView(FormView):
     def form_valid(self, form):
         status = self.request.POST['proceed']
         if status == 'go':
-            return render(self.request, 'tclone/entryconfirm.html', {'form': form})
+            return render(
+                self.request,
+                'tclone/entryconfirm.html',
+                {'form': form}
+                )
         elif status == 'judge':
             form.save()
             return super().form_valid(form)
@@ -34,7 +37,7 @@ class EntryOKView(TemplateView):
 class FollowView(LoginRequiredMixin, CreateView):
     model = FF
     fields = []
-    template_name = 'tclone/follow.html'
+    template_name = 'tweet/profile.html'
     success_url = reverse_lazy('tweet:home')
     def form_valid(self, form):
         model = form.save(commit=False)
@@ -63,23 +66,4 @@ def followx(request, pk):
         followed = followed
     )
     ff.delete()
-    messages.success(request, 'フォローを解除しました')
     return redirect('tweet:home')
-
-
-# class FollowXView(LoginRequiredMixin, DeleteView):
-#     model = FF
-#     template_name = 'tclone/followx.html'
-#     success_url = reverse_lazy('tweet:home')
-#     def delete(self, request, pk):
-#         user = get_user_model().objects.get(pk=request.user.pk)
-#         followed = get_user_model().objects.get(pk=pk)
-#         ff = FF.objects.filter(
-#             user = user,
-#             followed = followed
-#         )
-#         if user == followed:
-#             messages.error(self.request, 'なぜかあなた自身をフォロー解除しようとしています')
-#         ff.delete()
-#         messages.success(self.request, 'フォローを解除しました')
-#         return super().delete(request)

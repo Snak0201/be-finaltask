@@ -4,13 +4,22 @@
 <h1>{{ user }} さんのツイート</h1>
 {% if user.id is not request.user.id %}
   {% if not ff %}
-    <p><a href="{% url 'tclone:follow' pk=user.pk %}">{{ user }} さんをフォローする</a></p>
+  <p>
+    <form name='follow' action="{% url 'tclone:follow' pk=user.pk %}" method="POST">
+      フォローしていません！
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit" onclick='return confirm("フォローしますか？");'>フォロー</button>
+    </form>
+  </p>
   {% else %}
-  <form class="delete_confirm" action="{% url 'tclone:followx' pk=user.pk %}" method="post">
-    フォローしています！
-    {% csrf_token %}
-    <button type="submit" onclick='return confirm("削除しますか？");'>フォロー解除</button>
-  </form>
+  <p>
+    <form class="delete_confirm" action="{% url 'tclone:followx' pk=user.pk %}" method="post">
+      フォローしています！
+      {% csrf_token %}
+      <button type="submit" onclick='return confirm("削除しますか？");'>フォロー解除</button>
+    </form>
+  </p>
   {% endif %}
 {% else %}
     <p>
