@@ -6,7 +6,7 @@
   {% if not ff %}
     <p><a href="{% url 'tclone:follow' pk=user.pk %}">{{ user }} さんをフォローする</a></p>
   {% else %}
-    <p><a href="#">{{ user }}さんをフォロー解除</a></p>
+    <p><a href="{% url 'tclone:followx' pk=user.pk %}">{{ user }}さんをフォロー解除</a></p>
   {% endif %}
 {% else %}
     <p>
