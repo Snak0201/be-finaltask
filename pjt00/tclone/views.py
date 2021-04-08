@@ -5,8 +5,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse_lazy
 from django.views.decorators.http import require_POST
-from django.views.generic import CreateView, DeleteView, FormView, TemplateView
-from .forms import FollowXForm
+from django.views.generic import CreateView, FormView, TemplateView
 from .models import FF
 
 
@@ -58,7 +57,7 @@ class FollowView(LoginRequiredMixin, CreateView):
 
 @require_POST
 @login_required
-def followx(request, pk):
+def follow_del(request, pk):
     user = get_user_model().objects.get(pk=request.user.pk)
     followed = get_user_model().objects.get(pk=pk)
     ff = FF.objects.filter(
