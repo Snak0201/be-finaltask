@@ -14,7 +14,7 @@
   </p>
   {% else %}
   <p>
-    <form class="delete_confirm" action="{% url 'tclone:followx' pk=user.pk %}" method="post">
+    <form class="delete_confirm" action="{% url 'tclone:follow_del' pk=user.pk %}" method="post">
       フォローしています！
       {% csrf_token %}
       <button type="submit" onclick='return confirm("削除しますか？");'>フォロー解除</button>
@@ -28,6 +28,6 @@
 {% endif %}
 {% for tweet in tweets reversed %}
   <em><a href="{% url 'tweet:profile' pk=tweet.user.pk %}">{{ tweet.user }}</a></em> / <a href="{% url 'tweet:tdetail' pk=tweet.pk %}">詳細</a>
-  <p>{{ tweet.tweet }}</p>
+  <p>{{ tweet }}</p>
 {% endfor %}
 {% endblock %}
