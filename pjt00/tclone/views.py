@@ -36,7 +36,7 @@ class EntryOKView(TemplateView):
 class FollowView(LoginRequiredMixin, CreateView):
     model = FF
     fields = []
-    template_name = 'tweet/profile.html'
+    template_name = 'tweet/follow.html'
     success_url = reverse_lazy('tweet:home')
     def form_valid(self, form):
         model = form.save(commit=False)
@@ -59,7 +59,7 @@ class FollowView(LoginRequiredMixin, CreateView):
 @login_required
 def follow_del(request, pk):
     user = get_user_model().objects.get(pk=request.user.pk)
-    followed = get_user_model().objects.get(pk=pk)
+    followed = get_object_or_404(get_user_model(), pk=pk)
     ff = FF.objects.filter(
         user = user,
         followed = followed
