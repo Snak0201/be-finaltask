@@ -36,7 +36,7 @@ class EntryOKView(TemplateView):
 class FollowView(LoginRequiredMixin, CreateView):
     model = FF
     fields = []
-    template_name = 'tweet/follow.html'
+    template_name = 'tclone/follow.html'
     success_url = reverse_lazy('tweet:home')
     def form_valid(self, form):
         model = form.save(commit=False)
