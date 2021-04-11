@@ -18,13 +18,15 @@
       <div class="subhead">
         <h1>
           {% block subhead %}
-            {{ user }} でログインしています
+            {{ request.user }} でログインしています
           {% endblock %}
         </h1>
         <p>
           {% block log %}
           {% if user.is_authenticated %}
-            <a href="{% url 'tweet:home' %}">{{ user }} のホーム</a>
+            <a href="{% url 'tweet:home' %}">ホーム</a>
+            /
+            <a href="{% url 'tweet:tweet' %}">ツイートする</a>
             /
             <a href="{% url 'tclone:logout' %}"><em>ログアウト</em></a>
           {% else %}

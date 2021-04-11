@@ -1,0 +1,33 @@
+{% extends "tweet/base.html" %}
+{% block title %}{{ user }} -{{ block.super }}{% endblock %}
+{% block content %}
+<h1>{{ user }} さんのツイート</h1>
+{% if user.id is not request.user.id %}
+  {% if not ff %}
+  <p>
+    <form name='follow' action="{% url 'tclone:follow' pk=user.pk %}" method="POST">
+      フォローしていません！
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit" onclick='return confirm("フォローしますか？");'>フォロー</button>
+    </form>
+  </p>
+  {% else %}
+  <p>
+    <form class="delete_confirm" action="{% url 'tclone:follow_del' pk=user.pk %}" method="post">
+      フォローしています！
+      {% csrf_token %}
+      <button type="submit" onclick='return confirm("解除しますか？");'>フォロー解除</button>
+    </form>
+  </p>
+  {% endif %}
+{% else %}
+    <p>
+      あなたのツイートが表示されています！
+    </p>
+{% endif %}
+{% for tweet in tweets reversed %}
+  <em><a href="{% url 'tweet:profile' pk=tweet.user.pk %}">{{ tweet.user }}</a></em> / <a href="{% url 'tweet:tdetail' pk=tweet.pk %}">詳細</a>
+  <p>{{ tweet }}</p>
+{% endfor %}
+{% endblock %}
