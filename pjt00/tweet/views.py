@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404, render, redirect
 from django.views.decorators.http import require_POST
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, View
 from rules.contrib.views import permission_required, objectgetter
 from .forms import TweetForm
 from .models import Tweet
@@ -66,3 +66,19 @@ def profile(request, pk):
         'ff': ff
         }
     )
+
+class FavoriteView(LoginRequiredMixin, View):
+    def get(self, request, pk):
+        user = get_object_or_404(get_user_model(), pk=pk)
+        context = {
+            'user': user,
+        }
+        return render(request, 'tweet/favorite.html', context)
+
+class FavoriteDeleteView(LoginRequiredMixin, View):
+    def get(self, request, pk):
+        user = get_object_or_404(get_user_model(), pk=pk)
+        context = {
+            'user': user,
+        }
+        return render(request, 'tweet/fdelete.html', context)

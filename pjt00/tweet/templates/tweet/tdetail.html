@@ -10,4 +10,8 @@
       <button type="submit" onclick='return confirm("削除しますか？");'>削除</button>
     </form>
   {% endif %}
+  <p>
+    お気に入り登録→<a href="{% url 'tweet:favorite' pk=tweet.pk %}">☆</a>
+    お気に入り解除→<a href="{% url 'tweet:fdelete' pk=tweet.pk %}">★</a>
+  </p>
 {% endblock %}
