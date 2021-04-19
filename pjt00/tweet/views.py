@@ -2,11 +2,12 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404, render, redirect
+from django.urls import reverse_lazy
 from django.views.decorators.http import require_POST
-from django.views.generic import TemplateView, View
+from django.views.generic import CreateView,TemplateView, View
 from rules.contrib.views import permission_required, objectgetter
 from .forms import TweetForm
-from .models import Tweet
+from .models import Tweet, Favorite
 from tclone.models import FF
 
 
@@ -67,13 +68,19 @@ def profile(request, pk):
         }
     )
 
-class FavoriteView(LoginRequiredMixin, View):
-    def get(self, request, pk):
-        user = get_object_or_404(get_user_model(), pk=pk)
-        context = {
-            'user': user,
-        }
-        return render(request, 'tweet/favorite.html', context)
+class FavoriteView(LoginRequiredMixin, CreateView):
+    model = Favorite
+    fields = []
+    template_name = 'tweet/favorite.html'
+    success_url = reverse_lazy('tweet:home')
+    def form_valid(self, form):
+        model = form.save(commit=False)
+        model.user = get_user_model().objects.get(pk=self.request.user.id)
+        model.tweet = get_object_or_404(
+            Tweet,
+            pk = self.kwargs['pk']
+            )
+        return super().form_valid(form)
 
 class FavoriteDeleteView(LoginRequiredMixin, View):
     def get(self, request, pk):

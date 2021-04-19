@@ -11,7 +11,12 @@
     </form>
   {% endif %}
   <p>
-    お気に入り登録→<a href="{% url 'tweet:favorite' pk=tweet.pk %}">☆</a>
+    お気に入り登録
+<form name='follow' action="{% url 'tweet:favorite' pk=tweet.pk %}" method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">☆</button>
+</form>
     お気に入り解除→<a href="{% url 'tweet:fdelete' pk=tweet.pk %}">★</a>
   </p>
 {% endblock %}
