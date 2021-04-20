@@ -1,5 +1,9 @@
 ﻿{% extends "tweet/base.html" %}
 {% block title %}favorite -{{ block.super }}{% endblock %}
 {% block content %}
-hoge
+<form name='favorite' method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit">
+</form>
 {% endblock %}
