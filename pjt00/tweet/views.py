@@ -34,7 +34,11 @@ def tweet(request):
 @login_required
 def tdetail(request, pk):
     tweet = get_object_or_404(Tweet, pk=pk)
-    return render(request, 'tweet/tdetail.html', {'tweet': tweet})
+    favorite = Favorite.objects.filter(user=request.user, tweet=tweet)
+    return render(request, 'tweet/tdetail.html', {
+        'tweet': tweet,
+        'favorite':favorite
+        })
 
 @permission_required('tweet.can_tedit',fn=objectgetter(Tweet, 'pk'))
 def tedit(request, pk):
@@ -80,6 +84,11 @@ class FavoriteView(LoginRequiredMixin, CreateView):
             Tweet,
             pk = self.kwargs['pk']
             )
+        if Favorite.objects.filter(user=model.user, tweet=model.tweet):
+            form.add_error(None, 'You have already favorite this tweet, sorry.')
+            return super().form_invalid(form)
+        else:
+            model.save()
         return super().form_valid(form)
 
 class FavoriteDeleteView(LoginRequiredMixin, View):
