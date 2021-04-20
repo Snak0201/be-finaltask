@@ -83,9 +83,12 @@ class FavoriteView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 class FavoriteDeleteView(LoginRequiredMixin, View):
-    def get(self, request, pk):
-        user = get_object_or_404(get_user_model(), pk=pk)
-        context = {
-            'user': user,
-        }
-        return render(request, 'tweet/fdelete.html', context)
+    def post(self, request, pk):
+        user = get_user_model().objects.get(pk=request.user.pk)
+        tweet = get_object_or_404(Tweet, pk=pk)
+        favorite = Favorite.objects.filter(
+            user = user,
+            tweet = tweet
+            )
+        favorite.delete()
+        return redirect('tweet:home')
