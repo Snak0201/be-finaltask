@@ -10,4 +10,19 @@
       <button type="submit" onclick='return confirm("削除しますか？");'>削除</button>
     </form>
   {% endif %}
+{% if not favorite %}
+    お気に入り登録
+<form name='follow' action="{% url 'tweet:favorite' pk=tweet.pk %}" method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">☆</button>
+</form>
+{% else %}
+      お気に入り解除
+<form name="follow_del" action="{% url 'tweet:fdelete' pk=tweet.pk %}" method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" onclick="return confirm('お気に入りを解除しますか？');">★</button>
+</form>
+{% endif %}
 {% endblock %}

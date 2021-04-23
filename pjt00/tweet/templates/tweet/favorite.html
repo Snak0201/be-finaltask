@@ -1,0 +1,10 @@
+﻿{% extends "tclone/base.html" %}
+{% block title %}Follow -{{ block.super }}{% endblock %}
+{% block content %}
+いいねします
+<form name='favorite' method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="いいね">
+</form>
+{% endblock %}

@@ -2,11 +2,12 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404, render, redirect
+from django.urls import reverse_lazy
 from django.views.decorators.http import require_POST
-from django.views.generic import TemplateView
+from django.views.generic import CreateView,TemplateView, View
 from rules.contrib.views import permission_required, objectgetter
 from .forms import TweetForm
-from .models import Tweet
+from .models import Tweet, Favorite
 from tclone.models import FF
 
 
@@ -33,7 +34,11 @@ def tweet(request):
 @login_required
 def tdetail(request, pk):
     tweet = get_object_or_404(Tweet, pk=pk)
-    return render(request, 'tweet/tdetail.html', {'tweet': tweet})
+    favorite = Favorite.objects.filter(user=request.user, tweet=tweet)
+    return render(request, 'tweet/tdetail.html', {
+        'tweet': tweet,
+        'favorite':favorite
+        })
 
 @permission_required('tweet.can_tedit',fn=objectgetter(Tweet, 'pk'))
 def tedit(request, pk):
@@ -66,3 +71,33 @@ def profile(request, pk):
         'ff': ff
         }
     )
+
+class FavoriteView(LoginRequiredMixin, CreateView):
+    model = Favorite
+    fields = []
+    template_name = 'tweet/favorite.html'
+    success_url = reverse_lazy('tweet:home')
+    def form_valid(self, form):
+        model = form.save(commit=False)
+        model.user = get_user_model().objects.get(pk=self.request.user.id)
+        model.tweet = get_object_or_404(
+            Tweet,
+            pk = self.kwargs['pk']
+            )
+        if Favorite.objects.filter(user=model.user, tweet=model.tweet):
+            form.add_error(None, 'You have already favorite this tweet, sorry.')
+            return super().form_invalid(form)
+        else:
+            model.save()
+        return super().form_valid(form)
+
+class FavoriteDeleteView(LoginRequiredMixin, View):
+    def post(self, request, pk):
+        user = get_user_model().objects.get(pk=request.user.pk)
+        tweet = get_object_or_404(Tweet, pk=pk)
+        favorite = Favorite.objects.filter(
+            user = user,
+            tweet = tweet
+            )
+        favorite.delete()
+        return redirect('tweet:home')
